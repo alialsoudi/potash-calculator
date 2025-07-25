@@ -1,58 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Potash Pile Calculator</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 30px;
       background: #f5f5f5;
       color: #333;
-      max-width: 600px;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 500px;
       margin: auto;
-      direction: ltr;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
     }
     input, select, button {
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin-top: 8px;
       width: 100%;
       font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
     }
     button {
       background-color: #008cba;
       color: white;
       border: none;
-      cursor: pointer;
+      margin-top: 20px;
     }
-    h2 {
-      text-align: center;
+    button:hover {
+      background-color: #0072a1;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      background: #eef;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .container {
+        padding: 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Potash Pile Volume & Weight Calculator</h2>
+  <div class="container">
+    <h2>Potash Pile Volume & Weight Calculator</h2>
 
-  <label>Bottom Diameter (meters):</label>
-  <input id="d1" type="number" placeholder="e.g. 50">
+    <label for="d1">Bottom Diameter (meters):</label>
+    <input id="d1" type="number" placeholder="e.g. 50">
 
-  <label>Top Diameter (meters):</label>
-  <input id="d2" type="number" placeholder="e.g. 40">
+    <label for="d2">Top Diameter (meters):</label>
+    <input id="d2" type="number" placeholder="e.g. 40">
 
-  <label>Height (meters):</label>
-  <input id="h" type="number" placeholder="e.g. 9.5">
+    <label for="h">Height (meters):</label>
+    <input id="h" type="number" placeholder="e.g. 9.5">
 
-  <label>Select Potash Type:</label>
-  <select id="material">
-    <option value="1.1">Fine Potash (KCl)</option>
-    <option value="1.13">Standard Potash (KCl)</option>
-    <option value="1.2">Granular Potash (KCl)</option>
-  </select>
+    <label for="material">Select Potash Type:</label>
+    <select id="material">
+      <option value="1.1">Fine Potash (KCl)</option>
+      <option value="1.13">Standard Potash (KCl)</option>
+      <option value="1.2">Granular Potash (KCl)</option>
+    </select>
 
-  <button onclick="calculate()">Calculate</button>
+    <button onclick="calculate()">Calculate</button>
 
-  <h3 id="result"></h3>
+    <div id="result"></div>
+  </div>
 
   <script>
     function calculate() {
@@ -72,7 +107,7 @@
       const weight = volume * density;
 
       document.getElementById("result").innerHTML =
-        `🔹 Volume: ${volume.toFixed(2)} cubic meters<br>
+        `🔹 Volume: ${volume.toFixed(2)} m³<br>
          🔸 Approximate Weight: ${weight.toFixed(2)} tons`;
     }
   </script>
