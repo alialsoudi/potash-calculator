@@ -53,6 +53,7 @@
       background: #eef;
       padding: 15px;
       border-radius: 5px;
+      text-align: center;
     }
     @media (max-width: 600px) {
       body {
@@ -66,7 +67,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Potash Pile Volume & Weight Calculator</h2>
+    <h2>Potash Pile Weight Calculator</h2>
 
     <label for="d1">Bottom Diameter (meters):</label>
     <input id="d1" type="number" placeholder="e.g. 50">
@@ -107,8 +108,7 @@
       const weight = volume * density;
 
       document.getElementById("result").innerHTML =
-        `🔹 Volume: ${volume.toFixed(2)} m³<br>
-         🔸 Approximate Weight: ${weight.toFixed(2)} tons`;
+        `🔸 Approximate Weight: ${weight.toFixed(2)} tons`;
     }
   </script>
 </body>
