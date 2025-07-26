@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Potash Pile Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Potash Weight Calculator</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -43,6 +43,7 @@
       color: white;
       border: none;
       margin-top: 20px;
+      cursor: pointer;
     }
     button:hover {
       background-color: #0072a1;
@@ -67,22 +68,22 @@
 </head>
 <body>
   <div class="container">
-    <h2>Potash Pile Weight Calculator</h2>
+    <h2>Potash Weight Calculator</h2>
 
     <label for="d1">Bottom Diameter (meters):</label>
-    <input id="d1" type="number" placeholder="e.g. 50">
+    <input id="d1" type="number" placeholder="e.g. 50" />
 
     <label for="d2">Top Diameter (meters):</label>
-    <input id="d2" type="number" placeholder="e.g. 40">
+    <input id="d2" type="number" placeholder="e.g. 40" />
 
     <label for="h">Height (meters):</label>
-    <input id="h" type="number" placeholder="e.g. 9.5">
+    <input id="h" type="number" placeholder="e.g. 9.5" />
 
     <label for="material">Select Potash Type:</label>
     <select id="material">
-      <option value="1.1">Fine Potash (KCl)</option>
-      <option value="1.13">Standard Potash (KCl)</option>
-      <option value="1.2">Granular Potash (KCl)</option>
+      <option value="1.2">Granular Potash (KCl) – 1.20 t/m³</option>
+      <option value="1.13">Standard Potash (KCl) – 1.13 t/m³</option>
+      <option value="1.1">Fine Potash (KCl) – 1.10 t/m³</option>
     </select>
 
     <button onclick="calculate()">Calculate</button>
@@ -104,7 +105,7 @@
 
       const R = d1 / 2;
       const r = d2 / 2;
-      const volume = (1/3) * Math.PI * h * (R*R + R*r + r*r);
+      const volume = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
       const weight = volume * density;
 
       document.getElementById("result").innerHTML =
