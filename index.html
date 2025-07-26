@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Potash Pile Calculator</title>
+  <title>Frustum Potash Calculator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -42,7 +42,7 @@
       margin-top: 20px;
       width: 100%;
       padding: 10px;
-      background: #28a745;
+      background: #007bff;
       color: white;
       font-weight: bold;
       border: none;
@@ -51,10 +51,10 @@
     }
     .result {
       margin-top: 20px;
-      background: #eafbea;
+      background: #e6f0ff;
       padding: 15px;
       border-radius: 5px;
-      color: #155724;
+      color: #004085;
       font-size: 18px;
       text-align: center;
     }
@@ -62,16 +62,16 @@
 </head>
 <body>
   <div class="container">
-    <h2>Potash Weight Calculator</h2>
+    <h2>Potash Frustum Calculator</h2>
 
     <label for="d1">Base Diameter (meters):</label>
     <input type="number" id="d1" placeholder="مثال: 50" />
 
-    <label for="h">Total Height (meters):</label>
-    <input type="number" id="h" placeholder="مثال: 7" />
+    <label for="d2">Top Diameter (meters):</label>
+    <input type="number" id="d2" placeholder="مثال: 10" />
 
-    <label for="flat">Flat Top Height (meters):</label>
-    <input type="number" id="flat" placeholder="مثال: 1 (أو صفر إذا ما في سطح)" />
+    <label for="h">Height (meters):</label>
+    <input type="number" id="h" placeholder="مثال: 6.5" />
 
     <label for="material">Potash Type:</label>
     <select id="material">
@@ -88,27 +88,27 @@
   <script>
     function calculate() {
       const d1 = parseFloat(document.getElementById("d1").value);
+      const d2 = parseFloat(document.getElementById("d2").value);
       const h = parseFloat(document.getElementById("h").value);
-      const flat = parseFloat(document.getElementById("flat").value);
       const density = parseFloat(document.getElementById("material").value);
 
-      if (isNaN(d1) || isNaN(h) || isNaN(flat) || d1 <= 0 || h <= 0 || flat < 0 || density <= 0 || flat >= h) {
-        document.getElementById("result").innerHTML = `<span style="color:red;">Please enter valid values.</span>`;
+      if (isNaN(d1) || isNaN(d2) || isNaN(h) || d1 <= 0 || d2 < 0 || h <= 0) {
+        document.getElementById("result").innerHTML = `<span style="color:red;">Please enter valid positive numbers.</span>`;
         return;
       }
 
-      const r = d1 / 2;
-      const coneHeight = h - flat;
+      const R = d1 / 2;
+      const r = d2 / 2;
 
-      const volume_cone = (1 / 3) * Math.PI * r * r * coneHeight;
-      const volume_flat = flat > 0 ? Math.PI * r * r * flat : 0;
+      // حجم المخروط المقطوع (Frustum)
+      const volume = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
 
-      const total_volume = volume_cone + volume_flat;
-      const weight = total_volume * density;
+      // الوزن = الحجم × الكثافة
+      const weight = volume * density;
 
       document.getElementById("result").innerHTML = `
         <strong>Approximate Weight:</strong><br>
-        <span style="font-size: 24px; color: #28a745;"><strong>${weight.toFixed(2)} tons</strong></span>
+        <span style="font-size: 24px; color: #007bff;"><strong>${weight.toFixed(2)} tons</strong></span>
       `;
     }
   </script>
