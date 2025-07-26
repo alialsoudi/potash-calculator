@@ -1,74 +1,105 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Potash Weight Calculator</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
       margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
+
     .container {
-      max-width: 500px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
+      background-color: #ffffff;
+      padding: 30px 25px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    h2 {
+      max-width: 450px;
+      width: 90%;
       text-align: center;
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, select, button {
-      padding: 12px;
-      margin-top: 8px;
-      width: 100%;
-      font-size: 16px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
       box-sizing: border-box;
     }
+
+    h1 {
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 22px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      text-align: left;
+      margin-bottom: 6px;
+      margin-top: 18px;
+      font-size: 15px;
+      color: #222;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position-x: 98%;
+      background-position-y: center;
+    }
+
     button {
-      background-color: #008cba;
+      background-color: #28a745;
       color: white;
       border: none;
-      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #0072a1;
-    }
-    #result {
-      margin-top: 20px;
+
+    .result {
+      background-color: #eafbea;
+      color: #155724;
+      padding: 16px;
+      margin-top: 25px;
       font-size: 18px;
-      background: #eef;
-      padding: 15px;
-      border-radius: 5px;
-      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #b9e4c9;
     }
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      .container {
-        padding: 15px;
-      }
+
+    footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: gray;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h2>Potash Weight Calculator</h2>
+    <h1>Potash Weight Calculator</h1>
 
     <label for="d1">Bottom Diameter (meters):</label>
     <input id="d1" type="number" placeholder="e.g. 50" />
@@ -79,16 +110,22 @@
     <label for="h">Height (meters):</label>
     <input id="h" type="number" placeholder="e.g. 9.5" />
 
-    <label for="material">Select Potash Type:</label>
-    <select id="material">
-      <option value="1.125">Granular Potash (KCl) – 1.125 t/m³</option>
-      <option value="1.175">Standard Potash (KCl) – 1.175 t/m³</option>
-      <option value="1.250">Fine Potash (KCl) – 1.250 t/m³</option>
-    </select>
+    <label for="material">Potash Type:</label>
+    <div class="select-wrapper">
+      <select id="material">
+        <option value="1.125">Granular</option>
+        <option value="1.175">Standard</option>
+        <option value="1.250">Fine</option>
+      </select>
+    </div>
 
     <button onclick="calculate()">Calculate</button>
 
-    <div id="result"></div>
+    <div class="result" id="result"></div>
+
+    <footer>
+      &copy; 2025 Ali Alsaudi. All rights reserved.
+    </footer>
   </div>
 
   <script>
@@ -98,8 +135,8 @@
       const h = parseFloat(document.getElementById("h").value);
       const density = parseFloat(document.getElementById("material").value);
 
-      if (isNaN(d1) || isNaN(d2) || isNaN(h)) {
-        document.getElementById("result").innerHTML = "Please fill in all fields.";
+      if (isNaN(d1) || isNaN(d2) || isNaN(h) || d1 <= 0 || d2 <= 0 || h <= 0) {
+        document.getElementById("result").innerHTML = `<span style="color:red;">Please enter valid values.</span>`;
         return;
       }
 
@@ -108,9 +145,12 @@
       const volume = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
       const weight = volume * density;
 
-      document.getElementById("result").innerHTML =
-        `🔸 Approximate Weight: ${weight.toFixed(2)} tons`;
+      document.getElementById("result").innerHTML = `
+        <strong>Approximate Weight:</strong><br>
+        <span style="font-size: 26px; color: #28a745;"><strong>${weight.toFixed(2)} tons</strong></span>
+      `;
     }
   </script>
+
 </body>
 </html>
